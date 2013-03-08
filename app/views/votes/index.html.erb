@@ -1,0 +1,20 @@
+<h1>Listing rooms</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Building_id</th>
+    <th>Created At</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @votes.each do |vote| %>
+  <tr>
+    <td><%= vote.amount %></td>
+    <td><%= vote.building_id %></td>
+    <td><%= vote.created_at %></td>
+  </tr>
+<% end %>
+</table>
+<br />

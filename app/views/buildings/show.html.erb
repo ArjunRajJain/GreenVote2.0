@@ -1,0 +1,84 @@
+<p id="notice"><%= notice %></p>
+	<div id="@building-<%= @building.id%>" class="tab-content span12 pull-left container-fluid well" style="margin-left:0px;">
+		<div class="row-fluid">
+			<div class="span12" style="text-align:center;">
+				<h3><%= @building.name %></h3>
+				<% if @building.address %>
+				<%= @building.address %>
+				<%end%>
+			</div>
+		</div>
+		<br>
+		<div class="row-fluid">
+			<div class="row-fluid">
+				<div class="span8">
+					<div class="row-fluid">
+						<div class="span2"></div>
+						<div class="span8">
+							<%= image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{@building.latitude}%2C#{@building.longitude}" %>
+						</div>
+						<div class="span2"></div>
+					</div>
+					<br>
+					<div class="row-fluid">
+						<div class="span12 well">
+							<div class="tabbable ">
+								<ul class="nav nav-tabs">
+									<li class="active buildingtab"><a href="#hourly" data-toggle="tab">Hourly Data</a>
+									</li>
+									<li class="buildingtab"><a href="#historical" data-toggle="tab">Historical Data</a></li>
+									<li class="buildingtab"><a href="#chart" data-toggle="tab">Data Chart</a></li>
+								</ul>
+								<div class="tabcontent">
+									<div class="tab-pane active" id="hourly">
+									<%= content_tag :div, "", id: "votes_chart", data: {votes: @votes, num: @building.id} %>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="span4">
+					<ul class="nav nav-list well">
+						<li class="nav-header">Rooms list:</li>
+						<% for room in @building.rooms %>
+							<li><a href="#"><%= room.name %></a></li>
+						<% end %>
+						<li class="nav-header">Nearby locations:</li>
+						<% for location in @building.nearbys(10) %>
+					  		<li>
+					  			<%= link_to location.name, location %>
+					  		</li>
+						<% end %>
+						<li class="nav-header">Building menu:</li>
+						<li><%= link_to 'Edit', edit_building_path(@building) %></li>
+						<li><%= link_to 'Back', buildings_url %></li>
+						<li><%= link_to 'Destroy', @building, method: :delete, data: { confirm: 'Are you sure?' } %></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+<div id="graph"></div>
+<script>
+var graph = Morris.Line({
+    element: 'votes_chart',
+    data: $('#votes_chart').data('votes'),
+    xkey: 'created_at',
+    ykeys: ['amount'],
+    parseTime: false,
+    ymin: -50.0,
+    ymax: 50.0,
+    hideHover: true
+});
+
+function update() {
+  $.get('http://greenvote.herokuapp.com/buildings/' + $('#votes_chart').data('num')+ '/votes.json', function(data){
+  	graph.setData(data);
+  });
+}
+setInterval(update, 100);
+</script>
+
+

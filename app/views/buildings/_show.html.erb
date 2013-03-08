@@ -1,0 +1,53 @@
+<div id="building-<%= building.id%>" class="tab-content span12 pull-left container-fluid well" style="margin-left:0px;">
+	<div class="row-fluid">
+		<div class="span12" style="text-align:center;">
+			<h3><%= link_to building.name, building %></h3>
+			<!-- <%= building.address %> -->
+		</div>
+	</div>
+	<br>
+	<div class="row-fluid">
+		<div class="row-fluid">
+			<div class="span8">
+				<div class="row-fluid">
+					<div class="span12">
+						<%= image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{building.latitude}%2C#{building.longitude}" %>
+					</div>
+				</div>
+			</div>
+			<div class="span4">
+				<ul class="nav nav-list well">
+					<li class="nav-header">Rooms list:</li>
+					<% for room in building.rooms %>
+						<li><a href="#"><%= room.name %></a></li>
+					<% end %>
+				</ul>
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span12">
+				<%= content_tag :div, "", id: "votes_chart"+ building.id.to_s, data: {votes: @votes[building.id], num: building.id} %>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+var graph = Morris.Line({
+    element: 'votes_chart'+$('#votes_chart').data('num'),
+    data: $('#votes_chart').data('votes'),
+    xkey: 'created_at',
+    ykeys: ['amount'],
+    parseTime: false,
+    ymin: -50.0,
+    ymax: 50.0,
+    hideHover: true
+});
+
+function update() {
+  $.get('http://greenvote.herokuapp.com/buildings/' + $('#votes_chart').data('num')+ '/votes.json', function(data){
+  	graph.setData(data);
+  });
+}
+
+setInterval(update, 100);
+</script>
