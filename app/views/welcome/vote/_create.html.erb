@@ -1,0 +1,9 @@
+said it was 
+<strong>
+<% if activity.trackable.amount > 0 %> Hot  <% end %> 
+<% if activity.trackable.amount == 0 %> Just Right <% end %> 
+<% if activity.trackable.amount < 0 %> Cold <% end %> 
+</strong>
+at <%=link_to Building.find(activity.trackable.building_id).name ,  Building.find(activity.trackable.building_id)%>
+
+on <%= activity.trackable.created_at.strftime("%e %b %Y %H:%m:%S%p") %>

@@ -2,7 +2,7 @@ class VotesController < ApplicationController
   # GET /votes
   # GET /votes.json
   def index
-     @votes = Vote.where(building_id: params[:building_id],created_at: 1.hour.ago..Time.zone.now)
+     @votes = Vote.all
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @votes.to_json(:only => [:created_at, :amount]) }
@@ -38,10 +38,10 @@ class VotesController < ApplicationController
   # POST /votes.json
   def create
     @vote = Vote.new(params[:vote])
-    @vote.user_id = request.remote_ip
+    @vote.user_id = current_user.id
     respond_to do |format|
       if @vote.save
-        flash[:notice] = 'Successfully voted.'
+        track_activity @vote
         @vote.trigger_view_event
         format.html { redirect_to :controller => 'welcome'}
         format.json { redirect_to :controller => 'welcome'}

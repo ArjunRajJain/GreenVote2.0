@@ -12,6 +12,7 @@ class WelcomeController < ApplicationController
 		@client_ip = request.remote_ip
 		@rooms = Room.all
 		@vote = Vote.new
+		@activities = Activity.order("created_at desc")
 	end
 	def getBuildings
 		@building = Building.near([params[:lat],params[:lon]], 0.1, :order => :distance)

@@ -1,9 +1,10 @@
-<h1>Listing rooms</h1>
+<h1>Listing Votes</h1>
 
 <table>
   <tr>
     <th>Name</th>
     <th>Building_id</th>
+    <tH>User</th>
     <th>Created At</th>
     <th></th>
     <th></th>
@@ -13,7 +14,9 @@
   <tr>
     <td><%= vote.amount %></td>
     <td><%= vote.building_id %></td>
+    <td><%= vote.user_id %> </td>
     <td><%= vote.created_at %></td>
+        <td><%= link_to 'Destroy', vote, method: :delete, data: {} %></td>
   </tr>
 <% end %>
 </table>

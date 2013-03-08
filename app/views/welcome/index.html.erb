@@ -1,17 +1,12 @@
-
       <!--<hr class="iframehide">-->
       <div class="jumbotron" style="margin-bottom:0;">
         <h1 class="important">Welcome to GreenVote!</h1>
         <p class="lead">Vote Green. Get Comfortable. Save Energy.</p>
-                      <% if current_user %>
-                Signed in as <strong><%= current_user.name %></strong>!
-                <%= link_to "Sign out", signout_path, id: "sign_out" %>
-              <% else %>
-                <%= link_to "Sign in with Facebook", "/auth/facebook", id: "sign_in" %>
-              <% end %>
+        <%= render 'login' %>       
       </div>        
         <%= render 'form' %>
-
+        <%= render 'activities' %>
+      </br></br>
     <script src="./Template · Bootstrap_files/jquery.js"></script>
     <script src="./Template · Bootstrap_files/bootstrap-transition.js"></script>
     <script src="./Template · Bootstrap_files/bootstrap-alert.js"></script>

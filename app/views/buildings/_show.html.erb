@@ -44,7 +44,7 @@ var graph = Morris.Line({
 });
 
 function update() {
-  $.get('http://greenvote.herokuapp.com/buildings/' + $('#votes_chart').data('num')+ '/votes.json', function(data){
+  $.get('http://grnvote.com/buildings/' + $('#votes_chart').data('num')+ '/votes.json', function(data){
   	graph.setData(data);
   });
 }
