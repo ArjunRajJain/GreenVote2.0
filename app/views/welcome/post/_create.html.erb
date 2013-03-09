@@ -1,0 +1,7 @@
+said it was 
+<strong>
+<%= activity.trackable.content %>
+</strong>
+at <%=link_to Building.find(Room.find(activity.trackable.room_id).building_id).name ,  Building.find(Room.find(activity.trackable.room_id).building_id) %>
+
+on <%= activity.trackable.created_at.strftime("%e %b %Y %H:%m:%S%p") %>

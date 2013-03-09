@@ -38,16 +38,19 @@ class VotesController < ApplicationController
   # POST /votes.json
   def create
     @vote = Vote.new(params[:vote])
+    @post = Post.new(params[:post])
+    @post.room_id = @vote.room_id
+    @post.user_id = current_user.id
     @vote.user_id = current_user.id
+
     respond_to do |format|
       if @vote.save
+        @post.save
+        track_activity @post
         track_activity @vote
         @vote.trigger_view_event
         format.html { redirect_to :controller => 'welcome'}
         format.json { redirect_to :controller => 'welcome'}
-      else
-        format.html { render action: "new" }
-        format.json { render json: @vote.errors, status: :unprocessable_entity }
       end
     end
   end

@@ -13,6 +13,7 @@ class WelcomeController < ApplicationController
 		@rooms = Room.all
 		@vote = Vote.new
 		@activities = Activity.order("created_at desc")
+		@post = Post.new
 	end
 	def getBuildings
 		@building = Building.near([params[:lat],params[:lon]], 0.1, :order => :distance)

@@ -1,7 +1,6 @@
 class BuildingsController < ApplicationController
   # POST /buildings
   # POST /buildings.json
-  helper_method :getBuildings
   def index
     @buildings = Building.all
      i = 0
@@ -34,7 +33,6 @@ class BuildingsController < ApplicationController
 
   def new
     @building = Building.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @building }

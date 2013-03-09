@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
   has_many :activities
+  has_many :votes
+  has_many :posts
   def self.from_omniauth(auth)
     where(auth.slice(:provider, :uid)).first_or_initialize.tap do |user|
       user.provider = auth.provider
