@@ -45,9 +45,13 @@ class VotesController < ApplicationController
 
     respond_to do |format|
       if @vote.save
+        if @post.content != "" 
         @post.save
         track_activity @post
+        end
         track_activity @vote
+        
+        
         @vote.trigger_view_event
         format.html { redirect_to :controller => 'welcome'}
         format.json { redirect_to :controller => 'welcome'}
