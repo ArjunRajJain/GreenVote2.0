@@ -1,11 +1,13 @@
 <div>
     <h1>Green Feed:</h1>
     <% @activities.each do |activity| %>
+      <% if activity.trackable %>
       <%= div_for activity do %>
         <% if activity.user %>
         <strong><%= activity.user.name %></strong>
         <%= render "welcome/#{activity.trackable_type.underscore}/#{activity.action}", activity: activity %>
         <% end %>
       <% end %>
+      <%end>
     <% end %>
 <div>
