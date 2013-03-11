@@ -2,7 +2,7 @@ class VotesController < ApplicationController
   # GET /votes
   # GET /votes.json
   def index
-     @votes = Vote.all
+    @votes = Vote.where(building_id: params[:id],created_at: 1.hour.ago..Time.zone.now)
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @votes.to_json(:only => [:created_at, :amount]) }
